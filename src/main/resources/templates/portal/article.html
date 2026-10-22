@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/portal :: head(${article.title})"></head>
+<body>
+
+<header th:replace="fragments/portal :: header('article', ${session.loginUser})"></header>
+
+<div class="container page-body">
+    <div class="content-col">
+        <div class="card">
+            <div class="article-head">
+                <h1 th:text="${article.title}">标题</h1>
+                <div class="article-meta">
+                    <span class="cat badge badge-blue" th:text="${article.category}">分类</span>
+                    <span th:text="'作者：' + ${article.author}">作者</span>
+                    <span th:text="'发布于 ' + ${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">时间</span>
+                    <span th:text="${article.views} + ' 阅读'">阅读</span>
+                </div>
+            </div>
+            <div class="article-content" th:text="${article.content}">正文</div>
+        </div>
+
+        <div class="card section-gap">
+            <div class="card-title">网友评论</div>
+            <div class="comment-item" th:each="c : ${comments}">
+                <span class="avatar" th:text="${#strings.toUpperCase(#strings.substring(c.author == null or #strings.isEmpty(c.author) ? '匿' : c.author, 0, 1))}">网</span>
+                <div class="comment-bubble">
+                    <div class="who" th:text="${c.author}">匿名网友</div>
+                    <div class="txt" th:utext="${c.content}">评论内容</div>
+                    <div class="time" th:text="${#temporals.format(c.createdAt, 'yyyy-MM-dd HH:mm')}">时间</div>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(comments)}" class="desc" style="padding:10px 0">还没有评论，快来说两句吧～</div>
+
+            <form method="post" th:action="@{/article/comment}" style="margin-top:18px">
+                <input type="hidden" name="articleId" th:value="${article.id}">
+                <div class="form-row">
+                    <label>昵称</label>
+                    <input class="input" name="author" placeholder="留下你的昵称（可匿名）">
+                </div>
+                <div class="form-row">
+                    <label>评论内容</label>
+                    <textarea class="input" name="content" rows="4" placeholder="支持部分富文本格式" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">发表评论</button>
+            </form>
+        </div>
+    </div>
+
+    <aside class="side-col">
+        <div class="card">
+            <div class="card-title">热门文章</div>
+            <ul class="side-list">
+                <li th:each="h, st : ${hotArticles}">
+                    <span class="rank" th:text="${st.index + 1}">1</span>
+                    <a th:href="@{/article(id=${h.id})}" th:text="${#strings.abbreviate(h.title, 20)}">标题</a>
+                    <span class="views" th:text="${h.views}">0</span>
+                </li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-title">标签云</div>
+            <div class="tag-cloud">
+                <a href="/search?q=建站">建站</a><a href="/search?q=模板">模板</a><a href="/search?q=插件">插件</a>
+                <a href="/search?q=升级">升级</a><a href="/search?q=采集">采集</a><a href="/search?q=安全">安全</a>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer th:replace="fragments/portal :: footer"></footer>
+</body>
+</html>

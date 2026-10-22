@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - 青枫CMS 管理后台'">管理后台</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="admin-side" th:fragment="sidebar(active)">
+    <div class="admin-logo"><span class="mark">枫</span>青枫CMS 后台</div>
+    <nav class="admin-menu">
+        <div class="menu-group">概览</div>
+        <a href="/admin" th:classappend="${active} == 'dash' ? 'active'"><span class="ico">▦</span> 仪表盘</a>
+
+        <div class="menu-group">内容管理</div>
+        <a href="/admin/content/import" th:classappend="${active} == 'import' ? 'active'"><span class="ico">⇩</span> 订阅源导入</a>
+        <a href="/admin/content/theme" th:classappend="${active} == 'theme' ? 'active'"><span class="ico">◈</span> 模板配置</a>
+        <a href="/admin/media/preview" th:classappend="${active} == 'media' ? 'active'"><span class="ico">▣</span> 媒体库</a>
+
+        <div class="menu-group">用户与工单</div>
+        <a href="/admin/members" th:classappend="${active} == 'members' ? 'active'"><span class="ico">☺</span> 会员管理</a>
+        <a href="/admin/ticket" th:classappend="${active} == 'ticket' ? 'active'"><span class="ico">✉</span> 工单系统</a>
+
+        <div class="menu-group">系统</div>
+        <a href="/admin/tools/network" th:classappend="${active} == 'network' ? 'active'"><span class="ico">◉</span> 网络诊断</a>
+        <a href="/admin/report" th:classappend="${active} == 'report' ? 'active'"><span class="ico">▤</span> 数据报表</a>
+        <a href="/admin/logs" th:classappend="${active} == 'logs' ? 'active'"><span class="ico">≡</span> 系统日志</a>
+        <a href="/admin/open/api" th:classappend="${active} == 'api' ? 'active'"><span class="ico">⌘</span> 开放平台</a>
+    </nav>
+</div>
+
+</body>
+</html>

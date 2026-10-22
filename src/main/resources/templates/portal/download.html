@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/portal :: head('下载中心')"></head>
+<body>
+
+<header th:replace="fragments/portal :: header('download', ${session.loginUser})"></header>
+
+<div class="container page-body">
+    <div class="content-col">
+        <div class="card">
+            <div class="card-title">文档资料下载</div>
+            <div class="dl-item" th:each="f : ${files}">
+                <div class="file-icon">TXT</div>
+                <div style="flex:1">
+                    <div style="font-weight:600;font-size:14.5px" th:text="${f[1]}">文档名</div>
+                    <div class="desc" style="margin:2px 0 0">文本文档 · <span th:text="${f[2]}">大小</span></div>
+                </div>
+                <a class="btn btn-ghost btn-sm" th:href="@{/download(file=${f[0]})}" th:text="'在线预览 · ' + ${f[0]}">预览</a>
+            </div>
+        </div>
+
+        <div class="card" th:if="${preview != null}">
+            <div class="card-title">文档预览</div>
+            <p class="desc">正在预览：<code class="inline" th:text="${file}">file.txt</code></p>
+            <div class="pre-box" th:text="${preview}">文件内容</div>
+        </div>
+        <div class="card" th:if="${preview == null}">
+            <div class="desc" style="padding:8px 0">文件不存在或已下架，请从上方列表中选择文档进行预览。</div>
+        </div>
+    </div>
+
+    <aside class="side-col">
+        <div class="card">
+            <div class="card-title">热门文章</div>
+            <ul class="side-list">
+                <li th:each="h, st : ${hotArticles}">
+                    <span class="rank" th:text="${st.index + 1}">1</span>
+                    <a th:href="@{/article(id=${h.id})}" th:text="${#strings.abbreviate(h.title, 20)}">标题</a>
+                    <span class="views" th:text="${h.views}">0</span>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+<footer th:replace="fragments/portal :: footer"></footer>
+</body>
+</html>

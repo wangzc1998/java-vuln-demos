@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('开放平台')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('api')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">系统 / 开放平台</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="card">
+                <div class="card-title">接口信息</div>
+                <table class="data-table">
+                    <tr><th>接口</th><th>方法</th><th>说明</th></tr>
+                    <tr><td><code class="inline" style="color:#2f6fed">/api/article/list</code></td><td>GET</td><td>获取文章列表，支持分页参数 page / size</td></tr>
+                    <tr><td><code class="inline" style="color:#2f6fed">/api/article/push</code></td><td>POST</td><td>推送文章内容，需携带签名</td></tr>
+                    <tr><td><code class="inline" style="color:#2f6fed">/api/comment/list</code></td><td>GET</td><td>获取评论列表</td></tr>
+                </table>
+            </div>
+
+            <div class="card tool-form">
+                <div class="card-title">签名生成器</div>
+                <p class="desc">输入待签名字符串，生成本地演示用的 MD5 签名与临时请求令牌。</p>
+                <form method="get" action="/admin/open/api" class="inline-form">
+                    <input class="input" type="text" name="input" placeholder="例如：appid=qf2026&title=hello" th:value="${input}">
+                    <button class="btn btn-primary" type="submit">生成签名</button>
+                </form>
+                <div th:if="${sign != null}" style="margin-top:16px">
+                    <div class="kv"><span class="k">MD5 签名</span><span class="v" th:text="${sign}">--</span></div>
+                    <div class="kv"><span class="k">临时令牌 (nonce)</span><span class="v" th:text="${token}">--</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">联调示例</div>
+                <div class="pre-box">POST /api/article/push HTTP/1.1
+Host: demo.qingfeng-cms.com
+Content-Type: application/json
+
+{
+  "appKey": "qf_8d2f4a7cbb91",
+  "appSecret": "sk_live_51Hx9QmN2vTpLwYz7",
+  "internalToken": "tk_live_8d2f4a7c-bb91-4e1f-9d44-22f0bc0d3a91",
+  "jwtKey": "my-super-secret-jwt-signing-key-please-replace",
+  "title": "新文章推送"
+}</div>
+                <p class="desc" style="margin-top:10px">以上为联调环境演示参数，正式环境请前往密钥管理重新签发。</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

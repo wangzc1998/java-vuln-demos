@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('仪表盘')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('dash')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">仪表盘</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="stat-grid">
+                <div class="stat-card"><div class="stat-ico thumb-0">▤</div><div><div class="num" th:text="${articleCount}">0</div><div class="lbl">内容总数</div></div></div>
+                <div class="stat-card"><div class="stat-ico thumb-1">✉</div><div><div class="num" th:text="${commentCount}">0</div><div class="lbl">评论总数</div></div></div>
+                <div class="stat-card"><div class="stat-ico thumb-2">☺</div><div><div class="num" th:text="${memberCount}">0</div><div class="lbl">注册会员</div></div></div>
+                <div class="stat-card"><div class="stat-ico thumb-3">◉</div><div><div class="num" th:text="${visitToday}">0</div><div class="lbl">今日访问 (PV)</div></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">最新评论</div>
+                <table class="data-table">
+                    <tr><th>昵称</th><th>内容</th><th>时间</th></tr>
+                    <tr th:each="c : ${recentComments}">
+                        <td th:text="${c['author']}">昵称</td>
+                        <td th:text="${#strings.abbreviate(c['content'], 48)}">内容</td>
+                        <td th:text="${c['created_at']}">时间</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-title">系统概览</div>
+                <div class="kv"><span class="k">程序版本</span><span class="v">青枫CMS v2.3.0</span></div>
+                <div class="kv"><span class="k">运行环境</span><span class="v">Java / Spring Boot / H2</span></div>
+                <div class="kv"><span class="k">模板引擎</span><span class="v">Thymeleaf</span></div>
+                <div class="kv"><span class="k">系统时间</span><span class="v" th:text="${#temporals.format(#temporals.createToday(), 'yyyy-MM-dd')}">2026-09-30</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

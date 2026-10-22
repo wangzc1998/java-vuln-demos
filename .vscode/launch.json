@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot: VulnDemosApplication",
+            "request": "launch",
+            "mainClass": "com.demo.vuln.VulnDemosApplication",
+            "projectName": "java-vuln-demos",
+            "vmArgs": "-Dspring.profiles.active=default",
+            "preLaunchTask": "mvn: compile",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot: attach to 8089",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5005
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/portal :: head('个人中心')"></head>
+<body>
+
+<header th:replace="fragments/portal :: header('profile', ${session.loginUser})"></header>
+
+<div class="container" style="margin-top:30px;padding-bottom:50px">
+    <div class="profile-grid">
+        <div class="card profile-side">
+            <span class="avatar" th:text="${#strings.toUpperCase(#strings.substring(u['username'],0,1))}">A</span>
+            <h3 th:text="${u['username']}" style="font-size:19px">用户名</h3>
+            <p class="desc" th:text="${u['role']}">角色</p>
+            <div style="text-align:left;margin-top:10px">
+                <div class="kv"><span class="k">会员编号</span><span class="v" th:text="'UID-' + ${u['id']}">1</span></div>
+                <div class="kv"><span class="k">部门</span><span class="v" th:text="${u['department']}">部门</span></div>
+                <div class="kv"><span class="k">注册时间</span><span class="v">2025-11-02</span></div>
+                <div class="kv"><span class="k">积分</span><span class="v">2,860</span></div>
+            </div>
+        </div>
+
+        <div style="flex:1;min-width:0">
+            <div class="card">
+                <div class="card-title">基本资料</div>
+                <div class="alert-ok" th:if="${saved != null}">资料保存成功！</div>
+                <form method="post" th:action="@{/user/profile/update}">
+                    <input type="hidden" name="uid" th:value="${uid}">
+                    <div class="form-row">
+                        <label>电子邮箱</label>
+                        <input class="input" type="text" name="email" th:value="${u['email']}" placeholder="用于接收系统通知">
+                    </div>
+                    <div class="form-row">
+                        <label>个性签名</label>
+                        <input class="input" type="text" placeholder="介绍一下自己吧（暂未开放）">
+                    </div>
+                    <button class="btn btn-primary" type="submit">保存修改</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-title">安全设置</div>
+                <div class="kv"><span class="k">登录密码</span><a href="#" style="color:#2f6fed;font-size:13.5px">修改密码</a></div>
+                <div class="kv"><span class="k">绑定邮箱</span><span class="badge badge-green">已绑定</span></div>
+                <div class="kv"><span class="k">登录设备</span><span class="badge badge-gray">2 台在线</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/portal :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,11 @@
+《模板开发指南》
+
+青枫CMS 使用类 Smarty 标签语法：
+{qingfeng:list cid="1" row="10"} ... {/qingfeng:list}
+{qingfeng:field name="title"}
+
+模板目录：/templates/{模板名}/
+  index.html   首页
+  article.html 文章页
+  list.html    列表页
+  search.html  搜索页

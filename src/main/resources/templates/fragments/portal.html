@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - 青枫CMS'">青枫CMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="site-header" th:fragment="header(active, sessionUser)">
+    <div class="container header-inner">
+        <a class="logo" href="/">
+            <span class="mark">枫</span>青枫CMS<span class="ver">v2.3.0</span>
+        </a>
+        <nav class="main-nav">
+            <a href="/" th:classappend="${active} == 'home' ? 'active'">首页</a>
+            <a href="/search?q=产品动态" th:classappend="${active} == 'news' ? 'active'">产品动态</a>
+            <a href="/search?q=建站教程" th:classappend="${active} == 'tut' ? 'active'">建站教程</a>
+            <a href="/search?q=模板" th:classappend="${active} == 'tpl' ? 'active'">模板市场</a>
+            <a href="/download" th:classappend="${active} == 'download' ? 'active'">下载中心</a>
+        </nav>
+        <div class="header-right">
+            <th:block th:if="${sessionUser == null}">
+                <a class="btn btn-ghost btn-sm" href="/login">登录</a>
+                <a class="btn btn-primary btn-sm" href="/login">免费注册</a>
+            </th:block>
+            <th:block th:if="${sessionUser != null}">
+                <span class="user-chip"><span class="avatar" th:text="${#strings.toUpperCase(#strings.substring(sessionUser,0,1))}">A</span>
+                    <span th:text="${sessionUser}">admin</span></span>
+                <a class="btn btn-ghost btn-sm" href="/logout">退出</a>
+            </th:block>
+        </div>
+    </div>
+</header>
+
+<footer class="site-footer" th:fragment="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div style="max-width:340px">
+                <h4>青枫CMS</h4>
+                <p>简单、高效、开放的开源内容管理系统。基于 Java + Spring Boot 开发，全球装机量超过 86 万，是个人站长与企业建站的可靠选择。</p>
+            </div>
+            <div>
+                <h4>产品</h4>
+                <p><a href="/search?q=产品动态">产品动态</a></p>
+                <p><a href="/search?q=模板">模板市场</a></p>
+                <p><a href="/download">下载中心</a></p>
+            </div>
+            <div>
+                <h4>支持</h4>
+                <p><a href="/search?q=建站教程">建站教程</a></p>
+                <p><a href="/search?q=开发">开发文档</a></p>
+                <p><a href="/admin">管理后台</a></p>
+            </div>
+        </div>
+        <div class="copyright">© 2026 青枫网络 QINGFENG NETWORK · Powered by 青枫CMS v2.3.0 · 粤ICP备2026008888号</div>
+    </div>
+</footer>
+
+</body>
+</html>

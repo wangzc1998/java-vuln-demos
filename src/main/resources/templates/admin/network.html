@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('网络诊断')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('network')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">系统 / 运维工具 / 网络诊断</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="card tool-form">
+                <div class="card-title">网络连通性诊断</div>
+                <p class="desc">输入目标主机 IP 或域名，系统将执行 ping 命令检测服务器与目标主机之间的连通性。</p>
+                <form method="get" action="/admin/tools/network" class="inline-form">
+                    <input class="input" type="text" name="host" placeholder="例如：127.0.0.1 或 www.qingfeng-cms.com" th:value="${host}">
+                    <button class="btn btn-primary" type="submit">开始诊断</button>
+                </form>
+            </div>
+
+            <div class="card" th:if="${executed}">
+                <div class="card-title">诊断结果</div>
+                <div class="pre-box" th:text="${output}">ping 输出</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

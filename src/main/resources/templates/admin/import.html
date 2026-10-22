@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('订阅源导入')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('import')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">内容管理 / 订阅源导入</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="card tool-form">
+                <div class="card-title">RSS / OPML 订阅源导入</div>
+                <p class="desc">粘贴订阅源 XML 内容，系统将自动解析并导入到站点的聚合栏目中。</p>
+                <form method="post" action="/admin/content/import">
+                    <div class="form-row">
+                        <textarea class="input" name="xml" rows="10" placeholder='粘贴 OPML / RSS XML 内容' th:text="${xmlInput}"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">开始导入</button>
+                </form>
+            </div>
+
+            <div class="card" th:if="${parsed != null}">
+                <div class="card-title">导入结果</div>
+                <div class="pre-box" th:text="${parsed}">解析结果</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">导入格式示例</div>
+                <div class="pre-box">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;opml version="2.0"&gt;
+  &lt;body&gt;
+    &lt;outline text="青枫CMS官方博客" title="青枫CMS官方博客"/&gt;
+    &lt;outline text="开发者社区" title="开发者社区"/&gt;
+  &lt;/body&gt;
+&lt;/opml&gt;</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

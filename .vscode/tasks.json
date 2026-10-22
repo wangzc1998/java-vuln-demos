@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "mvn: compile",
+            "type": "shell",
+            "command": "mvn -q -o compile",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "presentation": { "reveal": "silent", "panel": "shared" }
+            },
+            "problemMatcher": ["$mvn"],
+            "isBackground": false
+        },
+        {
+            "label": "mvn: spring-boot:run",
+            "type": "shell",
+            "command": "mvn spring-boot:run",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "presentation": { "reveal": "always", "panel": "dedicated", "close": true }
+            },
+            "problemMatcher": ["$mvn"],
+            "isBackground": true
+        },
+        {
+            "label": "mvn: clean package -DskipTests",
+            "type": "shell",
+            "command": "mvn -q clean package -DskipTests",
+            "options": { "cwd": "${workspaceFolder}" },
+            "problemMatcher": ["$mvn"]
+        }
+    ]
+}

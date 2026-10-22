@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/portal :: head('站内搜索')"></head>
+<body>
+
+<header th:replace="fragments/portal :: header('search', ${session.loginUser})"></header>
+
+<div class="container page-body">
+    <div class="content-col">
+        <div class="card">
+            <form action="/search" method="get" class="inline-form">
+                <input class="input" type="text" name="q" placeholder="输入关键词搜索站内内容" th:value="${q}">
+                <button class="btn btn-primary" type="submit">搜索</button>
+            </form>
+        </div>
+
+        <div class="card" th:if="${!q.isEmpty()}">
+            <div class="card-title" style="font-weight:600;font-size:15px;color:#5b6472">
+                为您找到与&nbsp;<span style="color:#2f6fed" th:utext="${q}">关键词</span>&nbsp;相关的内容&nbsp;<span
+                    th:text="${#lists.size(results)}">0</span>&nbsp;条
+            </div>
+            <div class="post-item" th:each="r : ${results}">
+                <div class="thumb thumb-0" th:text="${#strings.substring(r['title'],0,1)}">枫</div>
+                <div style="flex:1;min-width:0">
+                    <h3><a th:href="@{/article(id=${r['id']})}" th:text="${r['title']}">标题</a></h3>
+                    <div class="post-meta">
+                        <span class="cat" th:text="${r['category']}">分类</span>
+                        <span th:text="${r['author']}">作者</span>
+                        <span th:text="${r['views']} + ' 阅读'">阅读</span>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(results)}" class="desc" style="padding:14px 0">
+                没有找到相关内容，换个关键词试试吧。
+            </div>
+        </div>
+
+        <div class="card" th:if="${q.isEmpty()}">
+            <div class="desc" style="padding:10px 0">输入关键词，搜索全站文章、教程与模板资源。</div>
+        </div>
+    </div>
+
+    <aside class="side-col">
+        <div class="card">
+            <div class="card-title">热门文章</div>
+            <ul class="side-list">
+                <li th:each="h, st : ${hotArticles}">
+                    <span class="rank" th:text="${st.index + 1}">1</span>
+                    <a th:href="@{/article(id=${h.id})}" th:text="${#strings.abbreviate(h.title, 20)}">标题</a>
+                    <span class="views" th:text="${h.views}">0</span>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+<footer th:replace="fragments/portal :: footer"></footer>
+</body>
+</html>

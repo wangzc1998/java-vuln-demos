@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('模板配置')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('theme')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">内容管理 / 模板配置</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="card tool-form">
+                <div class="card-title">模板配置导入</div>
+                <p class="desc">粘贴模板 JSON 配置串，一键应用配色、布局与模块开关等站点外观设置。</p>
+                <form method="post" action="/admin/content/theme">
+                    <div class="form-row">
+                        <textarea class="input" name="json" rows="9" placeholder='粘贴模板 JSON 配置' th:text="${jsonInput}"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">应用配置</button>
+                </form>
+            </div>
+
+            <div class="card" th:if="${result != null}">
+                <div class="card-title">应用结果</div>
+                <div class="pre-box" th:text="${result}">结果</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">配置示例</div>
+                <div class="pre-box">{
+  "theme": "yunqi",
+  "primaryColor": "#2f6fed",
+  "layout": "grid",
+  "modules": { "banner": true, "sidebar": true, "friendLinks": true }
+}</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

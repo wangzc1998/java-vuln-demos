@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/portal :: head('首页 - 简单高效的开源内容管理系统')"></head>
+<body>
+
+<header th:replace="fragments/portal :: header('home', ${session.loginUser})"></header>
+
+<div class="hero">
+    <div class="container">
+        <h1>简单、高效、开放的开源内容管理系统</h1>
+        <p>基于 Java + Spring Boot 打造，拖拽可视化编辑、海量模板生态、一键部署上线，86 万站长的共同选择。</p>
+        <form class="search-bar" action="/search" method="get">
+            <input type="text" name="q" placeholder="搜索教程、模板、插件…">
+            <button class="btn btn-primary" type="submit">立即搜索</button>
+        </form>
+    </div>
+</div>
+
+<div class="container page-body">
+    <div class="content-col">
+        <div class="card">
+            <div class="card-title">最新内容</div>
+            <div class="post-item" th:each="a, st : ${articles}">
+                <div class="thumb" th:class="'thumb-' + ${st.index % 6}"
+                     th:text="${#strings.substring(a.title, 0, 1)}">枫</div>
+                <div style="flex:1;min-width:0">
+                    <h3><a th:href="@{/article(id=${a.id})}" th:text="${a.title}">文章标题</a></h3>
+                    <div class="summary" th:text="${a.summary}">摘要</div>
+                    <div class="post-meta">
+                        <span class="cat" th:text="${a.category}">分类</span>
+                        <span th:text="${a.author}">作者</span>
+                        <span th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd')}">2026-09-30</span>
+                        <span th:text="${a.views} + ' 阅读'">0 阅读</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="side-col">
+        <div class="card">
+            <div class="card-title">热门文章</div>
+            <ul class="side-list">
+                <li th:each="h, st : ${hotArticles}">
+                    <span class="rank" th:text="${st.index + 1}">1</span>
+                    <a th:href="@{/article(id=${h.id})}" th:text="${#strings.abbreviate(h.title, 20)}">标题</a>
+                    <span class="views" th:text="${h.views}">0</span>
+                </li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-title">标签云</div>
+            <div class="tag-cloud">
+                <a href="/search?q=建站">建站</a><a href="/search?q=模板">模板</a><a href="/search?q=插件">插件</a>
+                <a href="/search?q=升级">升级</a><a href="/search?q=采集">采集</a><a href="/search?q=安全">安全</a>
+                <a href="/search?q=SEO">SEO</a><a href="/search?q=伪静态">伪静态</a><a href="/search?q=开发">开发</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">友情链接</div>
+            <ul class="links">
+                <li><a href="/">青枫CMS 官方站</a></li>
+                <li><a href="/">青枫开发者社区</a></li>
+                <li><a href="/">青枫模板市场</a></li>
+                <li><a href="/">Java 开源社区</a></li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+<footer th:replace="fragments/portal :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('会员管理')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('members')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">会员管理</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="alert-ok" th:if="${msg != null}" th:text="${msg}">提示</div>
+
+            <div class="card">
+                <div class="card-title">会员列表</div>
+                <table class="data-table">
+                    <tr><th>ID</th><th>用户名</th><th>部门</th><th>角色</th><th>邮箱</th></tr>
+                    <tr th:each="m : ${members}">
+                        <td th:text="${m['id']}">1</td>
+                        <td th:text="${m['username']}">admin</td>
+                        <td th:text="${m['department']}">部门</td>
+                        <td><span class="badge" th:classappend="${m['role'] == '系统管理员'} ? 'badge-amber' : 'badge-gray'"
+                                  th:text="${m['role']}">角色</span></td>
+                        <td th:text="${m['email']}">邮箱</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-title">批量操作</div>
+                <p class="desc">对所有会员执行部门标记重置，用于年度组织架构调整后的数据清理。</p>
+                <form method="post" action="/admin/members/resetDept"
+                      onsubmit="return confirm('确定要对全部会员执行批量重置吗？')">
+                    <button class="btn btn-ghost" type="submit">批量重置部门标记</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

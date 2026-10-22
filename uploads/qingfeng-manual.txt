@@ -1,0 +1,8 @@
+《青枫CMS 使用手册》
+
+1. 安装要求：JDK 1.8+、MySQL 5.7+、Nginx 1.18+（可选）
+2. 快速安装：解压安装包 → 配置数据库 → 执行 startup.bat / startup.sh
+3. 后台地址：http://your-domain/admin
+4. 默认模板：default（可在后台切换）
+
+更多内容请参考在线文档：https://docs.qingfeng-cms.com

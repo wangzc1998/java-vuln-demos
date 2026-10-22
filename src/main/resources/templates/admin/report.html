@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin :: head('数据报表')"></head>
+<body>
+<div class="admin-shell">
+    <div th:replace="fragments/admin :: sidebar('report')"></div>
+
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <span class="crumb">系统 / 数据报表</span>
+            <span class="user-chip"><span class="avatar">A</span> admin</span>
+        </div>
+
+        <div class="admin-content">
+            <div class="stat-grid">
+                <div class="stat-card"><div class="stat-ico thumb-0">▤</div><div><div class="num">86.2 万</div><div class="lbl">累计装机量</div></div></div>
+                <div class="stat-card"><div class="stat-ico thumb-1">★</div><div><div class="num">4.2 万</div><div class="lbl">社区开发者</div></div></div>
+                <div class="stat-card"><div class="stat-ico thumb-2">◈</div><div><div class="num">900+</div><div class="lbl">市场模板数</div></div></div>
+                <div class="stat-card"><div class="stat-ico thumb-4">⌘</div><div><div class="num">1,300+</div><div class="lbl">生态插件数</div></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">站点构建信息导出</div>
+                <p class="desc">导出当前站点构建描述文件（pom.xml），便于技术支持人员排查环境问题。</p>
+                <p style="margin-bottom:12px;font-size:14px">
+                    已读取构建描述文件 <code class="inline">pom.xml</code>，
+                    <span th:text="${readBytes}">0</span> 字节预览：
+                </p>
+                <div class="pre-box" th:text="${preview}">pom.xml 内容</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
